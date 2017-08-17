@@ -1,22 +1,4 @@
-dataSource:
-  {  'driverClassName' : 'net.sf.log4jdbc.DriverSpy'
-   , 'url' : 'jdbc:log4jdbc:mysql://150.150.206.50:3306/sbc?zeroDateTimeBehavior=convertToNull'
-   , 'username' : 'root'
-   , 'password' : 'Posgen201%'
-  }
-
-mybatis :
-  {
-    'configPath' : 'META-INF/mybatis/mybatis.xml'
-  }
-
-mail :
-  {
-      'host' : 'smtp.gmail.com'
-    , 'port' : 587
-    , 'username' : 'wykim@cloud4u.co.kr'
-    , 'password' : '755486sk'
-    , 'encoding' : 'UTF-8'
-    , 'smtpAuth' : 'true'
-    , 'smtpStarttlsEnable' : 'true'
-  }
+### 스프링
+spring:
+  profiles:
+    active: "prod"

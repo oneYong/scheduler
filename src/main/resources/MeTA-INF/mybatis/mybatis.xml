@@ -16,5 +16,7 @@
 		<typeAlias alias="int" type="java.lang.Integer" />
 		<typeAlias alias="long" type="java.lang.Long" />
 		<typeAlias alias="list" type="java.util.List" />
+		<typeAlias alias="billingDataCNS" type="com.scheduler.vo.BillingDataCNS" />
+		<typeAlias alias="billingDataMEGAKINX" type="com.scheduler.vo.BillingDataMEGAKINX" />
 	</typeAliases>
 </configuration>

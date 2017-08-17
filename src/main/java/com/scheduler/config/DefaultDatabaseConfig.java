@@ -22,7 +22,6 @@ import javax.sql.DataSource;
  * Created by cloud4u on 2016-04-05.
  */
 @Configuration
-@EnableTransactionManagement
 @Lazy
 @MapperScan("com.scheduler.mapper")
 @EnableConfigurationProperties({ConfigProperties.class})
@@ -65,4 +64,5 @@ public class DefaultDatabaseConfig implements TransactionManagementConfigurer{
     public PlatformTransactionManager annotationDrivenTransactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
+
 }

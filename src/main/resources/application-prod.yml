@@ -1,0 +1,21 @@
+project:
+  base-resource-dir: classpath:/
+
+mybatis:
+  configPath: META-INF/mybatis/mybatis.xml
+
+dataSource:
+  driverClassName: net.sf.log4jdbc.DriverSpy
+  url: jdbc:log4jdbc:mysql://150.150.206.50:3306/sbc?zeroDateTimeBehavior=convertToNull
+  username: root
+  password: Posgen201%
+  testOnBorrow: true
+  validationQuery: SELECT 1
+
+server:
+  port: 8099
+  error:
+    whitelabel:
+      enabled: false
+  tomcat:
+    uri-encoding: UTF-8

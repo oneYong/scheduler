@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scheduler.mapper.BillingMapper">
+    <insert id="insertBillingInfo_CNS"  parameterType="billingDataCNS">
+        INSERT INTO
+        sbc_aws_account_billinginfo
+        (
+        account_id,
+        account_name,
+        product_code,
+        product_name,
+        tag,
+        total_cost,
+        total_date,
+        register_date
+        )
+        VALUES(
+        #{accountId},
+        #{accountName},
+        #{productCode},
+        #{productName},
+        #{tag},
+        #{totalCost},
+        #{totalDate},
+        NOW()
+        )
+        ;
+    </insert>
+    <insert id="insertBillingInfoTotal_CNS"  parameterType="billingDataCNS">
+        INSERT INTO
+        sbc_aws_account_billinginfo_total
+        (
+        total_date,
+        product_code,
+        total_cost,
+        before_cost_extra,
+        register_date
+        )
+        VALUES(
+        #{totalDate},
+        #{productCode},
+        #{totalCost},
+        #{beforeCostExtra},
+        NOW()
+        )
+        ;
+    </insert>
+
+    <insert id="insertBillingInfo_KINX"  parameterType="billingDataMEGAKINX">
+        INSERT INTO
+        sbc_kinx_aws_account_billinginfo
+        (
+        account_id,
+        account_name,
+        service_name,
+        region_name,
+        product_code,
+        product_name,
+        tag,
+        total_cost,
+        total_date,
+        register_date
+        )
+        VALUES(
+        #{accountId},
+        #{accountName},
+        #{serviceName},
+        #{regionName},
+        #{productCode},
+        #{productName},
+        #{tag},
+        #{totalCost},
+        #{totalDate},
+        NOW()
+        )
+        ;
+    </insert>
+    <insert id="insertBillingInfo_MEGA"  parameterType="billingDataMEGAKINX">
+        INSERT INTO
+        sbc_mega_aws_account_billinginfo
+        (
+        account_id,
+        account_name,
+        service_name,
+        region_name,
+        product_code,
+        product_name,
+        tag,
+        total_cost,
+        total_date,
+        register_date
+        )
+        VALUES(
+        #{accountId},
+        #{accountName},
+        #{serviceName},
+        #{regionName},
+        #{productCode},
+        #{productName},
+        #{tag},
+        #{totalCost},
+        #{totalDate},
+        NOW()
+        )
+        ;
+    </insert>
+
+</mapper>
