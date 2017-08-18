@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns         = "http://www.w3.org/1999/xhtml"
+      xmlns:th= "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scheduling Server</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/dist/css/bootstrap.css}" />
+</head>
+<body>
+<div class="container">
+    <div class="starter-template">
+        <h1>Scheduling Server Today(<th:block th:text="${today}"></th:block>)</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div>
+                <h3>Billing Check</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>CNS</th>
+                        <th>MEGA</th>
+                        <th>LIME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center" >
+                        <td><th:block th:text="${billingObject.cns}"></th:block></td>
+                        <td><th:block th:text="${billingObject.mega}"></th:block></td>
+                        <td><th:block th:text="${billingObject.kinx}"></th:block></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div>
+                <h3>KIC User Check</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>ACT USER</th>
+                    <th>TOTAL USER</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="text-align: center">
+                    <td><th:block th:text="${kicObject.user}"></th:block></td>
+                    <td><th:block th:text="${kicObject.actUser}"></th:block></td>
+                    <td><th:block th:text="${kicObject.totalUser}"></th:block></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div>
+                <h3>AIC User Check</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>ACT USER</th>
+                    <th>TOTAL USER</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="text-align: center">
+                    <td><th:block th:text="${aicObject.user}"></th:block></td>
+                    <td><th:block th:text="${aicObject.actUser}"></th:block></td>
+                    <td><th:block th:text="${aicObject.totalUser}"></th:block></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div>
+                <h3>EIC User Check</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>ACT USER</th>
+                    <th>TOTAL USER</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="text-align: center">
+                    <td><th:block th:text="${eicObject.user}"></th:block></td>
+                    <td><th:block th:text="${eicObject.actUser}"></th:block></td>
+                    <td><th:block th:text="${eicObject.totalUser}"></th:block></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div>
+                <h3>RUC User Check</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>ACT USER</th>
+                    <th>TOTAL USER</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="text-align: center">
+                    <td><th:block th:text="${rucObject.user}"></th:block></td>
+                    <td><th:block th:text="${rucObject.actUser}"></th:block></td>
+                    <td><th:block th:text="${rucObject.totalUser}"></th:block></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/dist/js/bootstrap.js}"></script>
+<th:block>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>

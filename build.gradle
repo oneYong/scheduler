@@ -45,6 +45,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile ('org.springframework.boot:spring-boot-configuration-processor')
 	compileOnly('org.projectlombok:lombok')
@@ -54,4 +55,10 @@ dependencies {
 	runtime('mysql:mysql-connector-java')
 	compile("commons-dbcp:commons-dbcp:1.4")
 	compile group: 'org.lazyluke', name: 'log4jdbc-remix', version: '0.2.7'
+
+	compile 'org.webjars:jquery:3.1.1'
+	compile 'org.webjars.npm:bootstrap:3.3.7'
+
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.4.3.RELEASE'
 }

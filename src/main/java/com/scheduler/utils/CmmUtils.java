@@ -15,6 +15,13 @@ public class CmmUtils {
         return formatter.format(cal.getTime());
     }
 
+    public static String getGMTTodayTime(){
+        Calendar cal = Calendar.getInstance();
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return formatter.format(cal.getTime());
+    }
+
     public static String getGMTYesterday(){
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

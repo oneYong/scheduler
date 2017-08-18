@@ -1,5 +1,6 @@
 package com.scheduler.mapper;
 
+import com.scheduler.utils.CmmUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,17 @@ public class UserMapperTest {
     @Autowired
     private CheckMapper checkMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Test
-    public void test_select()throws Exception{
+    public void test()throws Exception{
         System.out.println(checkMapper.select());
+    }
+
+    @Test
+    public void test2()throws Exception{
+        String yesterday = CmmUtils.getGMTYesterday().replaceAll("-","");
+        System.out.println(userMapper.isActUser_KIC("20170818"));
     }
 }
