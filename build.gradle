@@ -61,4 +61,7 @@ dependencies {
 
 	compile("org.springframework.boot:spring-boot-devtools")
 	compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.4.3.RELEASE'
+
+	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.4.3.RELEASE'
 }

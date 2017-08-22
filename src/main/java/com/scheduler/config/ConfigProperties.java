@@ -20,5 +20,6 @@ public class ConfigProperties {
 
     private Map<String, Object> dataSource = new HashMap<String, Object>();
     private Map<String, Object> mybatis =  new HashMap<String, Object>();
+    private Map<String, Object> mail =  new HashMap<String, Object>();
 
 }
