@@ -3,13 +3,23 @@ package com.scheduler.service;
 import com.scheduler.utils.ECompany;
 import com.scheduler.vo.BillingDataCNS;
 import com.scheduler.vo.BillingDataMEGAKINX;
+
+import org.apache.http.client.methods.HttpPost;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import java.util.List;
 
 /**
@@ -17,10 +27,7 @@ import java.util.List;
  */
 @Service
 public class AWSBillingDataFactory {
-    private final String CNS_URL = "http://52.41.107.22/api/billing/selectAccountBillingInfo.do";
-    private final String CNS_USER_ID = "lge_cloudcenter_infra";
-    private final String CNS_PASSWORD = "!dlatl00";
-    private final String CNS_ACCOUNT_ID = "160945176187";
+
 
     private final String MEGA_URL = "http://52.78.8.121:8080/api/billing/getBillingList.do?billingMonth=";
     private final String KINX_URL = "http://52.78.8.121:8080/api/billing/getBillingLimeList.do?billingMonth=";
@@ -108,6 +115,7 @@ public class AWSBillingDataFactory {
 
     public List<BillingDataCNS> makeCNS_BillingData(String date) throws Exception {
         String data = this.getCNS_BillingData(date);
+        //String data = this.getCNS_BillingData_NEW(date);
         List<BillingDataCNS> billingDataCNSList = new ArrayList<>();
 
         //parsing...
@@ -137,7 +145,13 @@ public class AWSBillingDataFactory {
         return billingDataCNSList;
 
     }
+        // version 1
         private String getCNS_BillingData(String today){
+            String CNS_URL = "http://52.41.107.22/api/billing/selectAccountBillingInfo.do";
+            String CNS_USER_ID = "lge_cloudcenter_infra";
+            String CNS_PASSWORD = "!dlatl00";
+            String CNS_ACCOUNT_ID = "160945176187";
+
             String year = today.split("-")[0];
             String month = today.split("-")[1];
 
@@ -149,4 +163,45 @@ public class AWSBillingDataFactory {
 
             return result;
         }
+
+        // version 2
+        public String getCNS_BillingData_NEW(String today){
+            String year = today.split("-")[0];
+            String month = today.split("-")[1];
+            String serverAddr = "https://sep.mashup-plus.com:443";
+            String restUri = "/rs/aws/sdp/retrieveProductCost";
+            String accessKey = "JLY84KMHL4F4KFZ8L8GO";
+            String secretKey = "HrdE8qENAAR2muoyl+KcpA==";
+            String accountId = "611495371442";
+            ResponseEntity<String> result = null;
+
+
+
+            try {
+                HttpPost httpPost = new HttpPost(serverAddr+restUri);
+                System.out.println(httpPost.getMethod());
+                MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+                parameters.add("year", year);
+                parameters.add("month", month);
+                parameters.add("accountId", accountId);
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.set("CONTENT-TYPE","application/json");
+                httpHeaders.add("accessKey",accessKey);
+                httpHeaders.add("secretKey",secretKey);
+
+                HttpEntity<MultiValueMap<String, String>> request
+                        = new HttpEntity<>(parameters,httpHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                result = restTemplate.postForEntity(serverAddr+restUri,request,String.class);
+
+
+
+
+            } catch (Exception e){
+
+            }
+
+            return result.getStatusCodeValue()+"";
+        }
+
 }

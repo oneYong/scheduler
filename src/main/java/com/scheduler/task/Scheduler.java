@@ -35,6 +35,7 @@ public class Scheduler {
     public void getBillingData() throws Exception{
         try{
             //cnsBillingService.run();
+            //System.out.println("CNSBillService Complete!");
         }catch(Exception e){
             e.printStackTrace();
         }

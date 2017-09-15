@@ -28,13 +28,19 @@ public class CNSBillingService implements BillingService {
         String yesterday = CmmUtils.getGMTYesterday();
         String beforeYesterday = CmmUtils.getGMTBeforeYesterday();
 
+        // 1. data 가져옴
+        List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData(yesterday);
+
+        if(billingDataCNSList.size() == 0)
+            return;
+
         int cntBillingInfo = billingMapper.isBillingInfo_CNS(yesterday);
         int cntBillingInfoTotal = billingMapper.isBillingInfoTotal_CNS(yesterday);
 
         // data가 존재 하지 않을 때 실행
         if(cntBillingInfo == 0 && cntBillingInfoTotal == 0){
             // sbc_aws_account_billinginfo
-            List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData(yesterday);
+
             for(int i = 0; i < billingDataCNSList.size(); i++){
                 BillingDataCNS billingDataCNS = billingDataCNSList.get(i);
                 billingDataCNS.setTotalDate(yesterday);

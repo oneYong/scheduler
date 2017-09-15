@@ -41,4 +41,18 @@ public class AWSBillingDataFactoryTest {
         System.out.println(billingDataMEGAKINXList2);
 
     }
+
+    @Test
+    public void test_makeCNS_BillingData_NEW() throws Exception{
+        List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData(CmmUtils.getGMTYesterday());
+
+        System.out.println(billingDataCNSList);
+
+    }
+
+    @Test
+    public void test_NEWCNS빌링() throws Exception{
+        String result = awsBillingDataFactory.getCNS_BillingData_NEW(CmmUtils.getGMTYesterday());
+        System.out.println(result);
+    }
 }
