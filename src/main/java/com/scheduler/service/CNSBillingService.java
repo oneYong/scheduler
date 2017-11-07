@@ -29,7 +29,8 @@ public class CNSBillingService implements BillingService {
         String beforeYesterday = CmmUtils.getGMTBeforeYesterday();
 
         // 1. data 가져옴
-        List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData(yesterday);
+        //List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData(yesterday);
+        List<BillingDataCNS> billingDataCNSList = awsBillingDataFactory.makeCNS_BillingData_NEW(yesterday);
 
         if(billingDataCNSList.size() == 0)
             return;

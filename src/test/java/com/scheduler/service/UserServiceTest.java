@@ -22,6 +22,6 @@ public class UserServiceTest {
 
     @Test
     public void test_run() throws Exception{
-        System.out.println(checkService.isUserCheck("20170817", ERegion.KIC));
+        System.out.println(checkService.isUserCheck("20171008", ERegion.KIC));
     }
 }

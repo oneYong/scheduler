@@ -4,7 +4,13 @@ import com.scheduler.utils.ECompany;
 import com.scheduler.vo.BillingDataCNS;
 import com.scheduler.vo.BillingDataMEGAKINX;
 
+import com.scheduler.vo.ClientSignatureGenerator;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -115,7 +121,6 @@ public class AWSBillingDataFactory {
 
     public List<BillingDataCNS> makeCNS_BillingData(String date) throws Exception {
         String data = this.getCNS_BillingData(date);
-        //String data = this.getCNS_BillingData_NEW(date);
         List<BillingDataCNS> billingDataCNSList = new ArrayList<>();
 
         //parsing...
@@ -145,6 +150,103 @@ public class AWSBillingDataFactory {
         return billingDataCNSList;
 
     }
+
+    public List<BillingDataCNS> makeCNS_BillingData_NEW(String date) throws Exception {
+        List<BillingDataCNS> billingDataCNSList = new ArrayList<>();
+        JSONObject jsonObject = null;
+        JSONArray jsonList = null;
+
+        // 빌링 데이터 셋팅 1
+        try{
+            //parsing...
+            jsonObject = new JSONObject(this.getCNS_BillingData_NEW(date));
+            jsonList = jsonObject.getJSONArray("list");
+
+            for(int i = 0; i < jsonList.length(); i++)
+            {
+                String accountId =  (String)((JSONObject)jsonList.get(i)).get("accountId");
+                String accountName =  (String)((JSONObject)jsonList.get(i)).get("accountName");
+                String tag =  (String)((JSONObject)jsonList.get(i)).get("tag");
+                String productCode =  (String)((JSONObject)jsonList.get(i)).get("productCode");
+                String productName =  (String)((JSONObject)jsonList.get(i)).get("productName");
+                double totalCost = (Double)((JSONObject)jsonList.get(i)).get("totalCost");
+
+                BillingDataCNS billingDataCNS = new BillingDataCNS();
+                billingDataCNS.setAccountId(accountId);
+                billingDataCNS.setAccountName(accountName);
+                billingDataCNS.setTag(tag);
+                billingDataCNS.setProductCode(productCode);
+                billingDataCNS.setProductName(productName);
+                billingDataCNS.setTotalCost(totalCost);
+
+                billingDataCNSList.add(billingDataCNS);
+            }
+        } catch (Exception e){
+            System.out.println("error message : " + e.getMessage());
+        }
+
+        // 빌링 데이터 셋팅 2
+        try{
+            //parsing...
+            jsonObject = new JSONObject(this.getCNS_BillingData_ADD1(date));
+            jsonList = jsonObject.getJSONArray("list");
+
+            for(int i = 0; i < jsonList.length(); i++)
+            {
+                String accountId =  (String)((JSONObject)jsonList.get(i)).get("accountId");
+                String accountName =  (String)((JSONObject)jsonList.get(i)).get("accountName");
+                String tag =  "intellytics_SDT";
+                String productCode =  (String)((JSONObject)jsonList.get(i)).get("productCode");
+                String productName =  (String)((JSONObject)jsonList.get(i)).get("productName");
+                double totalCost = (Double)((JSONObject)jsonList.get(i)).get("totalCost");
+
+                BillingDataCNS billingDataCNS = new BillingDataCNS();
+                billingDataCNS.setAccountId(accountId);
+                billingDataCNS.setAccountName(accountName);
+                billingDataCNS.setTag(tag);
+                billingDataCNS.setProductCode(productCode);
+                billingDataCNS.setProductName(productName);
+                billingDataCNS.setTotalCost(totalCost);
+
+                billingDataCNSList.add(billingDataCNS);
+            }
+        } catch (Exception e){
+            System.out.println("error message : " + e.getMessage());
+        }
+
+        // 빌링 데이터 셋팅 3
+        try{
+            //parsing...
+            jsonObject = new JSONObject(this.getCNS_BillingData_ADD2(date));
+            jsonList = jsonObject.getJSONArray("list");
+
+            for(int i = 0; i < jsonList.length(); i++)
+            {
+                String accountId =  (String)((JSONObject)jsonList.get(i)).get("accountId");
+                String accountName =  (String)((JSONObject)jsonList.get(i)).get("accountName");
+                String tag =  "intellytics_PROD";
+                String productCode =  (String)((JSONObject)jsonList.get(i)).get("productCode");
+                String productName =  (String)((JSONObject)jsonList.get(i)).get("productName");
+                double totalCost = (Double)((JSONObject)jsonList.get(i)).get("totalCost");
+
+                BillingDataCNS billingDataCNS = new BillingDataCNS();
+                billingDataCNS.setAccountId(accountId);
+                billingDataCNS.setAccountName(accountName);
+                billingDataCNS.setTag(tag);
+                billingDataCNS.setProductCode(productCode);
+                billingDataCNS.setProductName(productName);
+                billingDataCNS.setTotalCost(totalCost);
+
+                billingDataCNSList.add(billingDataCNS);
+            }
+        } catch (Exception e){
+            System.out.println("error message : " + e.getMessage());
+        }
+
+
+        return billingDataCNSList;
+
+    }
         // version 1
         private String getCNS_BillingData(String today){
             String CNS_URL = "http://52.41.107.22/api/billing/selectAccountBillingInfo.do";
@@ -164,44 +266,104 @@ public class AWSBillingDataFactory {
             return result;
         }
 
-        // version 2
-        public String getCNS_BillingData_NEW(String today){
-            String year = today.split("-")[0];
-            String month = today.split("-")[1];
-            String serverAddr = "https://sep.mashup-plus.com:443";
-            String restUri = "/rs/aws/sdp/retrieveProductCost";
-            String accessKey = "JLY84KMHL4F4KFZ8L8GO";
-            String secretKey = "HrdE8qENAAR2muoyl+KcpA==";
-            String accountId = "611495371442";
-            ResponseEntity<String> result = null;
+    // version 2
+    // SDP, SDP_MySQL 등 ...
+    public String getCNS_BillingData_NEW(String today){
+        String year = today.split("-")[0];
+        String month = today.split("-")[1];
+        String serverAddr = "https://sep.mashup-plus.com:443";
+        String restUri = "/rs/aws/sdp/retrieveProductCost";
+        String accessKey = "JLY84KMHL4F4KFZ8L8GO";
+        String secretKey = "HrdE8qENAAR2muoyl+KcpA==";
+        String accountId = "160945176187";
+        String tagNm = "user:System";
+        JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("year",year);
+        jsonObject.put("month",month);
+        jsonObject.put("accountId",accountId);
+        jsonObject.put("tagNm",tagNm);
 
+        String jsonMsg = jsonObject.toString();
+        String result = "";
 
-            try {
-                HttpPost httpPost = new HttpPost(serverAddr+restUri);
-                System.out.println(httpPost.getMethod());
-                MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-                parameters.add("year", year);
-                parameters.add("month", month);
-                parameters.add("accountId", accountId);
-                HttpHeaders httpHeaders = new HttpHeaders();
-                httpHeaders.set("CONTENT-TYPE","application/json");
-                httpHeaders.add("accessKey",accessKey);
-                httpHeaders.add("secretKey",secretKey);
+        result = getCNSBillingApi(serverAddr, restUri, accessKey, secretKey, jsonMsg, result);
 
-                HttpEntity<MultiValueMap<String, String>> request
-                        = new HttpEntity<>(parameters,httpHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                result = restTemplate.postForEntity(serverAddr+restUri,request,String.class);
+        return result;
+    }
 
+    // version 2
+    // intellytics_SDT
+    public String getCNS_BillingData_ADD1(String today){
+        String year = today.split("-")[0];
+        String month = today.split("-")[1];
+        String serverAddr = "https://sep.mashup-plus.com:443";
+        String restUri = "/rs/aws/sdp/retrieveProductCost";
+        String accessKey = "JLY84KMHL4F4KFZ8L8GO";
+        String secretKey = "HrdE8qENAAR2muoyl+KcpA==";
+        String accountId = "708801539634 ";
+        String tagNm = "user:CreatedBy";
+        JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("year",year);
+        jsonObject.put("month",month);
+        jsonObject.put("accountId",accountId);
+        jsonObject.put("tagNm",tagNm);
 
+        String jsonMsg = jsonObject.toString();
+        String result = "";
+
+        result = getCNSBillingApi(serverAddr, restUri, accessKey, secretKey, jsonMsg, result);
+
+        return result;
+    }
+    // version 2
+    // intellytics_PROD
+    public String getCNS_BillingData_ADD2(String today){
+        String year = today.split("-")[0];
+        String month = today.split("-")[1];
+        String serverAddr = "https://sep.mashup-plus.com:443";
+        String restUri = "/rs/aws/sdp/retrieveProductCost";
+        String accessKey = "JLY84KMHL4F4KFZ8L8GO";
+        String secretKey = "HrdE8qENAAR2muoyl+KcpA==";
+        String accountId = "077707537966";
+        String tagNm = "user:CreatedBy";
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("year",year);
+        jsonObject.put("month",month);
+        jsonObject.put("accountId",accountId);
+        jsonObject.put("tagNm",tagNm);
+
+        String jsonMsg = jsonObject.toString();
+        String result = "";
+
+        result = getCNSBillingApi(serverAddr, restUri, accessKey, secretKey, jsonMsg, result);
+
+        return result;
+    }
+
+        private String getCNSBillingApi(String serverAddr, String restUri, String accessKey, String secretKey, String jsonMsg, String result) {
+            try{
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(serverAddr + restUri);
+
+                String signature = new ClientSignatureGenerator().generateSignature(httpPost.getMethod()+restUri+jsonMsg,secretKey);
+                httpPost.addHeader("accessKey",accessKey);
+                httpPost.addHeader("signature",signature);
+
+                httpPost.setEntity(new StringEntity(jsonMsg,"UTF-8"));
+                httpPost.setHeader("CONTENT-TYPE","application/json");
+                HttpResponse response = httpClient.execute(httpPost);
+                if(response.getEntity() != null){
+                    result =  EntityUtils.toString(response.getEntity(),"UTF-8");
+                }else
+                    result =  null;
 
             } catch (Exception e){
 
             }
-
-            return result.getStatusCodeValue()+"";
+            return result;
         }
 
 }

@@ -34,8 +34,8 @@ public class Scheduler {
     @Scheduled(cron = "0 0 9 * * ?")
     public void getBillingData() throws Exception{
         try{
-            //cnsBillingService.run();
-            //System.out.println("CNSBillService Complete!");
+            cnsBillingService.run();
+            System.out.println("CNSBillService Complete!");
         }catch(Exception e){
             e.printStackTrace();
         }
